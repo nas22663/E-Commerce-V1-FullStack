@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Frontend Mentor | E-commerce product page</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../CSS/styles.css" />
+    <link rel="stylesheet" href="../CSS/homepage.css" />
+  </head>
+  <body>
+    <header>
+      <div class="navbar">
+        <div class="left-container">
+          <img class="logo" src="../images/logo.svg" alt="Logo" />
+          <nav class="navigation">
+            <ul>
+              <li><a href="#collections">Collections</a></li>
+              <li><a href="#men">Men</a></li>
+              <li><a href="#women">Women</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+          </nav>
+        </div>
+        <div class="right-container">
+          <div class="cart-icon">
+            <img src="../images/icon-cart.svg" alt="Cart" />
+          </div>
+          <div class="user-avatar">
+            <img src="../images/image-avatar.png" alt="User Avatar" />
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="carousel">
+        <div class="carousel-inner">
+          <div class="slide active">
+            <div class="sneaker-feature">
+              <div class="sneaker-description">
+                <h1>Discover Our Sneakers</h1>
+                <p>
+                  Your perfect pair of sneakers is waiting for you. Explore our
+                  collection to find high-quality sneakers that combine style
+                  with comfort. From classic designs to the latest trends, our
+                  sneakers are designed to keep up with your lifestyle.
+                </p>
+              </div>
+              <img
+                src="../images/sneaker.png"
+                alt="Sneaker Image"
+                class="sneaker-image"
+              />
+            </div>
+          </div>
+          <div class="slide">
+            <div class="sneaker-feature">
+              <div class="sneaker-description">
+                <h1>Discover Our Sneakers</h1>
+                <p>slide2</p>
+              </div>
+              <img
+                src="../images/sneaker.png"
+                alt="Sneaker Image"
+                class="sneaker-image"
+              />
+            </div>
+          </div>
+          <div class="slide">
+            <div class="sneaker-feature">
+              <div class="sneaker-description">
+                <h1>Discover Our Sneakers</h1>
+                <p>slide3</p>
+              </div>
+              <img
+                src="../images/sneaker.png"
+                alt="Sneaker Image"
+                class="sneaker-image"
+              />
+            </div>
+          </div>
+          <!-- ... Add more slides as needed ... -->
+        </div>
+        <div class="carousel-dots">
+          <span class="dot active" onclick="currentSlide(1)"></span>
+          <span class="dot" onclick="currentSlide(2)"></span>
+          <span class="dot" onclick="currentSlide(3)"></span>
+          <!-- ... Add more dots as needed ... -->
+        </div>
+      </div>
+
+      <div class="boxes-container">
+        <div class="box">
+          <img src="../images/sneaker1.avif" alt="Sneaker 1" />
+          <h3>Latest in Sneakers</h3>
+          <p>
+            Check out the freshest designs and releases to keep your style on
+            point.
+          </p>
+        </div>
+        <div class="box">
+          <img src="../images/sneaker2.avif" alt="Sneaker 2" />
+          <h3>Classic Collections</h3>
+          <p>
+            Discover the timeless styles that have defined generations of
+            sneaker culture.
+          </p>
+        </div>
+        <div class="box">
+          <img src="../images/sneaker3.avif" alt="Sneaker 3" />
+          <h3>Performance Sportswear</h3>
+          <p>
+            Find performance sneakers that empower your workouts with comfort
+            and support.
+          </p>
+        </div>
+      </div>
+    </main>
+    <footer>
+      <div class="footer-content">
+        <div class="footer-section contact">
+          <h3>Contact Us</h3>
+          <p><strong>Email:</strong> contact@sneakershop.com</p>
+          <p><strong>Phone:</strong> +1 234 567 8900</p>
+          <p>
+            <strong>Address:</strong> 123 Sneaker Street, Footwear City, SS
+            45678
+          </p>
+        </div>
+        <div class="footer-section social">
+          <h3>Follow Us</h3>
+          <div class="social-icons">
+            <a href="https://www.facebook.com" target="_blank"
+              ><img src="../images/facebook.svg" alt="Facebook"
+            /></a>
+            <a href="https://www.twitter.com" target="_blank"
+              ><img src="../images/twitter.svg" alt="Twitter"
+            /></a>
+            <a href="https://www.instagram.com" target="_blank"
+              ><img src="../images/instagram.svg" alt="Instagram"
+            /></a>
+            <a href="https://www.linkedin.com" target="_blank"
+              ><img src="../images/linkedin.svg" alt="LinkedIn"
+            /></a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="../Js/homepage.js"></script>
+  </body>
+</html>

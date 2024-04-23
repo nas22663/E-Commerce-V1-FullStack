@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="../images/favicon-32x32.png"
+    />
+    <title>Frontend Mentor | E-commerce product page</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../CSS/styles.css" />
+  </head>
+  <body>
+    <header>
+      <div class="navbar">
+        <div class="left-container">
+          <!-- Hamburger menu icon to open the menu -->
+          <button class="menu-icon" aria-label="Open Menu" type="button">
+            <img src="../images/icon-menu.svg" alt="Menu" />
+          </button>
+          <!-- Close icon to close the menu, hidden by default -->
+          <button class="close-icon" aria-label="Close Menu" type="button">
+            <img src="../images/icon-close.svg" alt="Close" />
+          </button>
+          <img class="logo" src="../images/logo.svg" alt="Logo" />
+          <nav class="navigation">
+            <ul>
+              <li><a href="#collections">Collections</a></li>
+              <li><a href="#men">Men</a></li>
+              <li><a href="#women">Women</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+          </nav>
+        </div>
+        <div class="right-container">
+          <div class="cart-icon">
+            <img src="../images/icon-cart.svg" alt="Cart" />
+            <span class="cart-item-count" data-count="0">0</span>
+          </div>
+          <div class="cart-details" style="display: none">
+            <div class="cart-items">
+              <h3>Cart</h3>
+            </div>
+            <button class="checkout-button">Checkout</button>
+          </div>
+
+          <div class="user-avatar">
+            <img src="../images/image-avatar.png" alt="User Avatar" />
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="product-section">
+        <div class="product-gallery">
+          <div class="big">
+            <img
+              id="mainProductImage"
+              class="product-image"
+              src=""
+              alt="Product Image"
+            />
+            <!-- Previous arrow using SVG for mobile navigation -->
+            <button class="mobile-previous" aria-label="Previous Image">
+              <svg
+                width="11"
+                height="15"
+                viewBox="0 0 13 18"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M11 1 3 9l8 8"
+                  stroke="#1D2026"
+                  stroke-width="3"
+                  fill="none"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </button>
+            <!-- Next arrow using SVG for mobile navigation -->
+            <button class="mobile-next" aria-label="Next Image">
+              <svg
+                width="11"
+                height="15"
+                viewBox="0 0 13 18"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m2 1 8 8-8 8"
+                  stroke="#1D2026"
+                  stroke-width="3"
+                  fill="none"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <div class="small" id="galleryThumbnailsContainer">
+            <!-- Thumbnails will be inserted here by JavaScript -->
+          </div>
+        </div>
+
+        <div id="lightbox" class="lightbox">
+          <div class="lightbox-content">
+            <div class="lightbox-close">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 15 15"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m11.596.782 2.122 2.122L9.12 7.499l4.597 4.597-2.122 2.122L7 9.62l-4.595 4.597-2.122-2.122L4.878 7.5.282 2.904 2.404.782l4.595 4.596L11.596.782Z"
+                  fill="#69707D"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </div>
+            <div class="image-box">
+              <div class="lightbox-previous">
+                <svg width="12" height="18" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M11 1 3 9l8 8"
+                    stroke="#1D2026"
+                    stroke-width="3"
+                    fill="none"
+                    fill-rule="evenodd"
+                  />
+                </svg>
+              </div>
+              <img class="lightbox-main-image" src="" alt="Product Image" />
+              <div class="lightbox-next">
+                <svg width="13" height="18" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="m2 1 8 8-8 8"
+                    stroke="#1D2026"
+                    stroke-width="3"
+                    fill="none"
+                    fill-rule="evenodd"
+                  />
+                </svg>
+              </div>
+            </div>
+            <div
+              class="small lightbox-thumbnails"
+              id="lightboxThumbnailsContainer"
+            >
+              <!-- Lightbox thumbnails will be inserted here by JavaScript -->
+            </div>
+          </div>
+        </div>
+
+        <div class="product-details">
+          <h3 class="company-name">SNEAKER COMPANY</h3>
+          <h1 id="productTitle" class="product-title"></h1>
+          <p class="product-description"></p>
+          <div class="pricing">
+            <div class="discounted-price">
+              <p class="price">$150.00</p>
+              <p class="discount">50%</p>
+            </div>
+            <p class="original-price">$250.00</p>
+          </div>
+          <div class="quantity-add-to-cart">
+            <div class="quantity">
+              <img
+                class="minus"
+                src="../images/icon-minus.svg"
+                alt="Minus Icon"
+              />
+              <p class="quantity-value">0</p>
+              <img class="plus" src="../images/icon-plus.svg" alt="Plus Icon" />
+            </div>
+            <button class="add-to-cart">Add to cart</button>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script src="../Js/product-details.js"></script>
+  </body>
+</html>

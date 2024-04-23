@@ -1,0 +1,330 @@
+document.addEventListener("DOMContentLoaded", () => {
+  checkCartEmpty();
+  const productTitle = document.getElementById("productTitle");
+  const productDescription = document.querySelector(".product-description");
+  const price = document.querySelector(".price");
+  const discount = document.querySelector(".discount");
+  const originalPrice = document.querySelector(".original-price");
+  const mainProductImage = document.getElementById("mainProductImage");
+  const galleryThumbnailsContainer = document.getElementById(
+    "galleryThumbnailsContainer"
+  );
+  const lightboxMainImage = document.querySelector(".lightbox-main-image");
+  const lightbox = document.getElementById("lightbox");
+  const lightboxClose = document.querySelector(".lightbox-close");
+  const lightboxPrevious = document.querySelector(".lightbox-previous");
+  const lightboxNext = document.querySelector(".lightbox-next");
+  const lightboxThumbnailsContainer = document.getElementById(
+    "lightboxThumbnailsContainer"
+  );
+  const minusButton = document.querySelector(".minus");
+  const plusButton = document.querySelector(".plus");
+  const quantityValue = document.querySelector(".quantity-value");
+  const menuIcon = document.querySelector(".menu-icon");
+  const closeIcon = document.querySelector(".close-icon");
+  const navigation = document.querySelector(".navigation");
+  const mobilePrev = document.querySelector(".mobile-previous");
+  const mobileNext = document.querySelector(".mobile-next");
+  const cartIcon = document.querySelector(".cart-icon");
+  const cartDetails = document.querySelector(".cart-details");
+  const cartItemsContainer = document.querySelector(".cart-items");
+  const addToCartButton = document.querySelector(".add-to-cart");
+
+  let images = []; // This will hold URLs of images
+  let currentIndex = 0; // Track the current image index
+
+  // Menu functionality
+  menuIcon.addEventListener("click", () => {
+    navigation.classList.add("open");
+    closeIcon.classList.add("open");
+    menuIcon.style.display = "none"; // Hide menu icon
+  });
+
+  closeIcon.addEventListener("click", () => {
+    navigation.classList.remove("open");
+    closeIcon.classList.remove("open");
+    menuIcon.style.display = "block"; // Show menu icon again
+  });
+
+  // Quantity management
+  let quantity = 1;
+  quantityValue.textContent = quantity.toString();
+
+  minusButton.addEventListener("click", () => {
+    if (quantity > 1) {
+      quantity -= 1;
+      quantityValue.textContent = quantity.toString();
+    }
+  });
+
+  plusButton.addEventListener("click", () => {
+    quantity += 1;
+    quantityValue.textContent = quantity.toString();
+  });
+
+  // Fetch product data
+  const apiUrl = "http://localhost:3000/product/661e1445fb13e1a719bc1ed7";
+  fetch(apiUrl)
+    .then((response) => response.json())
+    .then((data) => {
+      updateProductDetails(data.product);
+      images = data.product.images.map((img) => img.secure_url); // Assuming image URLs are in this path
+      currentIndex = 0; // Start with the first image
+      updateMainImage(currentIndex); // Set main image
+      updateThumbnails(data.product.images); // Create thumbnails
+      updateActiveThumbnail(); // Highlight the thumbnail for the main image
+    })
+    .catch((error) => console.error("Error loading product data:", error));
+
+  function updateProductDetails(product) {
+    productTitle.textContent = product.title;
+    productDescription.textContent = product.desc;
+    price.textContent = `$${product.appliedPrice.toFixed(2)}`;
+    discount.textContent = `${product.discount}%`;
+    originalPrice.textContent = `$${product.basePrice.toFixed(2)}`;
+    mainProductImage.src = product.images[0].secure_url;
+    updateThumbnails(product.images);
+  }
+
+  function updateThumbnails(images) {
+    galleryThumbnailsContainer.innerHTML = "";
+    lightboxThumbnailsContainer.innerHTML = "";
+    images.forEach((img, index) => {
+      const galleryThumb = createThumbnail(img.secure_url, index);
+      const lightboxThumb = createThumbnail(img.secure_url, index);
+
+      galleryThumb.addEventListener("click", () => {
+        currentIndex = index;
+        updateMainImage(currentIndex);
+        highlightThumbnail(galleryThumbnailsContainer, currentIndex);
+      });
+
+      lightboxThumb.addEventListener("click", () => {
+        // This thumb updates the lightbox main image only
+        lightboxMainImage.src = img.secure_url;
+        highlightThumbnail(lightboxThumbnailsContainer, index);
+      });
+
+      galleryThumbnailsContainer.appendChild(galleryThumb);
+      lightboxThumbnailsContainer.appendChild(lightboxThumb);
+    });
+  }
+
+  function createThumbnail(src, index) {
+    const thumb = document.createElement("img");
+    thumb.className = "thumbnail";
+    thumb.src = src;
+    thumb.alt = `Thumbnail ${index + 1}`;
+    thumb.dataset.index = index;
+    return thumb;
+  }
+
+  function highlightThumbnail(container, index) {
+    Array.from(container.getElementsByClassName("thumbnail")).forEach(
+      (thumb) => {
+        thumb.classList.toggle(
+          "active",
+          parseInt(thumb.dataset.index) === index
+        );
+      }
+    );
+  }
+
+  // Function to set active class on the current thumbnail
+  function updateActiveThumbnail() {
+    Array.from(galleryThumbnailsContainer.children).forEach((thumb, idx) => {
+      if (parseInt(thumb.dataset.index) === currentIndex) {
+        thumb.classList.add("active");
+      } else {
+        thumb.classList.remove("active");
+      }
+    });
+  }
+
+  function updateMainImage(index) {
+    mainProductImage.src = images[index];
+  }
+
+  // Event listeners for mobile navigation buttons
+  mobilePrev.addEventListener("click", () => {
+    currentIndex = currentIndex > 0 ? currentIndex - 1 : images.length - 1;
+    updateMainImage(currentIndex);
+  });
+
+  mobileNext.addEventListener("click", () => {
+    currentIndex = currentIndex < images.length - 1 ? currentIndex + 1 : 0;
+    updateMainImage(currentIndex);
+  });
+
+  // Lightbox controls
+
+  function openLightbox() {
+    lightbox.style.display = "flex";
+    lightboxMainImage.src = mainProductImage.src;
+    highlightThumbnail(lightboxThumbnailsContainer, currentIndex);
+  }
+
+  function closeLightbox() {
+    lightbox.style.display = "none";
+  }
+
+  function navigateLightbox(next) {
+    currentIndex = next
+      ? (currentIndex + 1) % images.length
+      : (currentIndex - 1 + images.length) % images.length;
+    lightboxMainImage.src = images[currentIndex];
+  }
+
+  mainProductImage.addEventListener("click", () => {
+    if (window.innerWidth > 375) {
+      openLightbox();
+    }
+  });
+
+  lightboxClose.addEventListener("click", closeLightbox);
+  lightboxPrevious.addEventListener("click", () => navigateLightbox(false));
+  lightboxNext.addEventListener("click", () => navigateLightbox(true));
+
+  function navigateLightbox(next) {
+    const numThumbnails = lightboxThumbnailsContainer.children.length;
+    currentIndex = next
+      ? (currentIndex + 1) % numThumbnails
+      : (currentIndex - 1 + numThumbnails) % numThumbnails;
+    lightboxMainImage.src = images[currentIndex];
+    highlightThumbnail(lightboxThumbnailsContainer, currentIndex);
+  }
+
+  function toggleCart() {
+    if (
+      cartDetails.style.display === "none" ||
+      cartDetails.style.display === ""
+    ) {
+      cartDetails.style.display = "flex";
+      updateCartItemCount();
+    } else {
+      cartDetails.style.display = "none";
+      updateCartItemCount();
+    }
+  }
+
+  // Add item to cart and update display
+
+  function updateCartItemCount() {
+    const items = Array.from(
+      cartItemsContainer.getElementsByClassName("item-quantity")
+    );
+    const totalCount = items.reduce(
+      (sum, item) => sum + parseInt(item.textContent),
+      0
+    );
+    const itemCountSpan = document.querySelector(".cart-item-count");
+    itemCountSpan.textContent = totalCount > 0 ? totalCount : "";
+    itemCountSpan.setAttribute("data-count", totalCount);
+    itemCountSpan.style.display = totalCount > 0 ? "block" : "none";
+  }
+  function addToCart(productName, price, imageUrl, quantity) {
+    let existingItem = Array.from(cartItemsContainer.children).find(
+      (item) => item.dataset.name === productName
+    );
+    if (existingItem) {
+      let quantityElement = existingItem.querySelector(".item-quantity");
+      let totalElement = existingItem.querySelector(".cart-item-total");
+      let currentQuantity = parseInt(quantityElement.textContent);
+      let newQuantity = currentQuantity + quantity;
+      let totalPrice = (
+        parseFloat(price.replace("$", "")) * newQuantity
+      ).toFixed(2);
+      quantityElement.textContent = newQuantity;
+      totalElement.textContent = `$${totalPrice}`;
+    } else {
+      const cartItem = document.createElement("div");
+      cartItem.className = "cart-item";
+      cartItem.dataset.name = productName;
+      cartItem.innerHTML = `
+        <img src="${imageUrl}" alt="${productName}" class="cart-item-image" />
+        <div class="cart-item-description">
+          <p>${productName}</p>
+          <p>${price} x <span class="item-quantity">${quantity}</span> <strong class="cart-item-total">$${(
+        parseFloat(price.replace("$", "")) * quantity
+      ).toFixed(2)}</strong></p>
+        </div>
+        <div class="delete-icon" style="cursor: pointer;">
+            <svg width="14" height="16" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+              <defs>
+                <path id="a" d="M0 2.625V1.75C0 1.334.334 1 .75 1h3.5l.294-.584A.741.741 0 0 1 5.213 0h3.571a.75.75 0 0 1 .672.416L9.75 1h3.5c.416 0 .75.334.75.75v.875a.376.376 0 0 1-.375.375H.375A.376.376 0 0 1 0 2.625Zm13 1.75V14.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 1 14.5V4.375C1 4.169 1.169 4 1.375 4h11.25c.206 0 .375.169.375.375ZM4.5 6.5c0-.275-.225-.5-.5-.5s-.5.225-.5.5v7c0 .275.225.5.5.5s.5-.225.5-.5v-7Zm3 0c0-.275-.225-.5-.5-.5s-.5.225-.5.5v7c0 .275.225.5.5.5s.5-.225.5-.5v-7Zm3 0c0-.275-.225-.5-.5-.5s-.5.225-.5.5v7c0 .275.225.5.5.5s.5-.225.5-.5v-7Z"/>
+              </defs>
+              <use fill="#C3CAD9" fill-rule="nonzero" xlink:href="#a" />
+            </svg>
+          </div>
+      `;
+      cartItemsContainer.appendChild(cartItem);
+
+      cartItem
+        .querySelector(".delete-icon")
+        .addEventListener("click", function () {
+          cartItem.remove();
+          updateCartItemCount();
+          checkCartEmpty();
+        });
+    }
+    updateCartItemCount();
+    checkCartEmpty();
+  }
+  function checkCartEmpty() {
+    const cartItemsContainer = document.querySelector(".cart-items");
+    const checkoutButton = document.querySelector(".checkout-button");
+    const itemsExist = cartItemsContainer.querySelectorAll(".cart-item").length;
+
+    if (itemsExist === 0) {
+      // If there are no items, display the empty cart message
+      cartItemsContainer.innerHTML = `<h3>Cart</h3><p class="empty-cart-message" style="color: #69707D; text-align: center;">Your cart is empty.</p>`;
+      checkoutButton.style.display = "none";
+    } else {
+      // Ensure the checkout button is visible when there are items
+      checkoutButton.style.display = "block";
+      // Remove the empty cart message if it exists
+      const emptyMessage = cartItemsContainer.querySelector(
+        ".empty-cart-message"
+      );
+      if (emptyMessage) {
+        emptyMessage.remove();
+      }
+    }
+  }
+
+  // Event listeners for UI interactions
+  cartIcon.addEventListener("click", toggleCart);
+
+  addToCartButton.addEventListener("click", () => {
+    const currentQuantity = parseInt(quantityValue.textContent);
+    const productName = productTitle.textContent.trim();
+    const priceText = price.textContent.trim();
+    const imageUrl = mainProductImage.src;
+    if (currentQuantity > 0) {
+      addToCart(productName, priceText, imageUrl, currentQuantity);
+      // Do not close the cart if it's already open
+      if (
+        cartDetails.style.display === "none" ||
+        cartDetails.style.display === ""
+      ) {
+        toggleCart();
+      }
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (lightbox.style.display === "flex") {
+      switch (event.key) {
+        case "Escape":
+          closeLightbox();
+          break;
+        case "ArrowLeft":
+          navigateLightbox(false);
+          break;
+        case "ArrowRight":
+          navigateLightbox(true);
+          break;
+      }
+    }
+  });
+});
