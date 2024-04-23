@@ -1,8 +1,8 @@
 import express from "express";
 import { config } from "dotenv";
-import { initiateApp } from "./src/initiate-app.js";
+import { initiateApp } from "./Server/src/initiate-app.js";
 
-config({ path: "./config/dev.config.env" });
+config({ path: "/Server/config/dev.config.env" });
 
 const app = express();
 
