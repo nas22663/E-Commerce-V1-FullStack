@@ -99,6 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
     discount.textContent = `${product.discount}%`;
     originalPrice.textContent = `$${product.basePrice.toFixed(2)}`;
     mainProductImage.src = product.images[0].secure_url;
+    mainProductImage.alt = product.title;
   }
 
   function fetchProductData() {
@@ -259,6 +260,7 @@ document.addEventListener("DOMContentLoaded", () => {
     thumb.className = "thumbnail";
     thumb.src = imageSrc;
     thumb.dataset.index = index;
+    thumb.alt = "Product image";
     return thumb;
   }
 
