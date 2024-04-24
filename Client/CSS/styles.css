@@ -661,6 +661,10 @@ footer {
     transition: all 0.3s ease;
   }
 
+  .right-container {
+    position: unset;
+  }
+
   .navigation.open {
     display: block;
     transform: translateX(0);
