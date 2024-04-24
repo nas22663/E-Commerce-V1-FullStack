@@ -6,7 +6,7 @@ import { rollbackSavedDocuments } from "./middlewares/rollback-saved-documents.m
 import cors from "cors";
 
 const corsOptions = {
-  origin: "https://nas22663.github.io", // Allow only your GitHub Pages domain
+  origin: "https://e-commerce-gfqhuco31-mahmoud-nasrs-projects.vercel.app/", // Allow only your GitHub Pages domain
   optionsSuccessStatus: 200,
 };
 
