@@ -43,6 +43,7 @@ header {
 .right-container {
   display: flex;
   align-items: center;
+  position: relative;
 }
 
 .logo {
@@ -147,7 +148,6 @@ nav a::after {
 .cart-items {
   height: 100%;
   padding: 16px;
-
   overflow-y: auto;
 }
 .cart-item-image {

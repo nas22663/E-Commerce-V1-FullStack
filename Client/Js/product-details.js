@@ -40,6 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setupEventListeners();
   fetchProductData();
   checkCartEmpty();
+
   let quantity = 1;
   elements.quantityValue.textContent = quantity.toString();
 
@@ -111,6 +112,7 @@ document.addEventListener("DOMContentLoaded", () => {
         currentIndex = 0; // Start with the first image
         updateMainImage(currentIndex); // Set main image
         updateThumbnails(data.product.images); // Create thumbnails
+        updateActiveThumbnail(currentIndex);
       })
       .catch((error) => console.error("Error loading product data:", error));
   }
