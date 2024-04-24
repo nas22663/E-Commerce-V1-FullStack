@@ -5,10 +5,15 @@ import { rollbackUploadedFiles } from "./middlewares/rollback-uploaded-files.mid
 import { rollbackSavedDocuments } from "./middlewares/rollback-saved-documents.middlewares.js";
 import cors from "cors";
 
+const corsOptions = {
+  origin: "https://nas22663.github.io", // Allow only your GitHub Pages domain
+  optionsSuccessStatus: 200,
+};
+
 export const initiateApp = (app, express) => {
   const port = process.env.PORT || 3000;
   app.use(express.json());
-  app.use(cors());
+  app.use(cors(corsOptions));
   db_connection();
 
   app.use("/user", routers.userRoutes);
