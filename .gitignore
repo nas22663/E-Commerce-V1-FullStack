@@ -3,3 +3,4 @@ config
 backup producthtml
 backup-product-js
 backup stylescss
+.vercel
