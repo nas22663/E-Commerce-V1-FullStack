@@ -103,7 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function fetchProductData() {
     const apiUrl =
-      "https://e-commerce-v1-fullstack.onrender.com/product/6627b437f704ad15c15c9617";
+      "https://e-commerce-v1-full-stack.vercel.app/product/6627b437f704ad15c15c9617";
     fetch(apiUrl)
       .then((response) => response.json())
       .then((data) => {
